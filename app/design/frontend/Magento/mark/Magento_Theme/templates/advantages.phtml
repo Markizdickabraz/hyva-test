@@ -1,0 +1,62 @@
+<div class="flex flex-col gap-10 md:gap-0">
+    <div class="m-adv px-4 py-8 3xl:py-10 bg-advBg flex flex-col gap-4 md:flex-wrap md:flex-row md:justify-center md:gap-x-12 md:gap-y-4 order-1 md:order-none 3xl:gap-4">
+        <?php
+        $items = [
+            ['image' => 'images/4.svg', 'title' => __('Офіційна гарантія'), 'description' => __('2 роки на всю продукцію')],
+            ['image' => 'images/3.svg', 'title' => __('Безкоштовна доставка'), 'description' => __('При покупці товару на суму більше 1000 грн')],
+            ['image' => 'images/2.svg', 'title' => __('Покупка в кредит'), 'description' => __('Оплата частинами або покупка в кредит')],
+            ['image' => 'images/1.svg', 'title' => __('Самовіз з магазину'), 'description' => __('Більше 500 магазинів по Україні')],
+        ];
+
+        foreach ($items as $item): ?>
+            <div class="flex gap-4 md:flex-col md:w-[300px] md:items-center text-center xl:w-auto 3xl:w-[340px] ">
+                <img class="md:w-12 3xl:w-[72px] md:h-12 3xl:h-[72px]" src="<?= $escaper->escapeUrl($block->getViewFileUrl($item['image'])) ?>"
+                     alt="icon">
+                <div>
+                    <h4 class="text-base md:text-lg	 text-black text-left md:text-center"><?= $escaper->escapeHtml($item['title']) ?></h4>
+                    <p class="text-sm text-slate-500 text-left md:text-center"><?= $escaper->escapeHtml($item['description']) ?></p>
+                </div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+
+    <div class="md:flex md:justify-center md:items-center md:bg-formTab md:h-352 md:m-hero xl:h-408 xl:bg-no-repeat	bg-cover xl:bg-formDesc 3xl:h-[477px]">
+        <div x-data="{ email: '', isChecked: false }"
+             class="bg-btnRed p-6 rounded-borderForm md:w-[514px] md:p-8 xl:w-[536px] mr-[-0.5rem] ml-[-0.5rem] md:mr-0 md:ml-0 3xl:px-[80px] 3xl:py-[50px] 3xl:w-[612px] 3xl:h-[332px]">
+            <h2 class="text-white uppercase text-3xl font-bold md:text-37 "><?= $escaper->escapeHtml(__('Вступай в клуб TEFAL')) ?></h2>
+            <p class="text-white pt-4 text-base md:pt-2 md:text-xl 3xl:py-4 ">
+                <?= $escaper->escapeHtml(__('узнавай об акциях раньше всех, и получай скидку')) ?>
+                <span class="text-2xl">5%</span>
+                <?= $escaper->escapeHtml(__('за подписку на наши новости')) ?>
+            </p>
+
+            <form @submit.prevent="submitForm">
+                <div class="flex gap-4 flex-col md:flex-row md:gap-0">
+                    <input x-model="email"
+                           class="bg-input rounded-md border-0 p-4 text-gray-400 text-sm md:basis-2/3 md:rounded-e-none	"
+                           type="email"
+                           placeholder="<?= $escaper->escapeHtml(__('Введіть ваш e-mail')) ?>" required>
+                    <button :disabled="!isChecked"
+                            class="text-base text-customRed bg-white rounded-md w-full p-4 md:basis-1/3 md:rounded-s-none cursor-pointer"
+                            type="submit">
+                        <?= $escaper->escapeHtml(__('Підписатись')) ?>
+                    </button>
+                </div>
+
+                <div class="flex pt-4 gap-2">
+                    <input x-model="isChecked" type="checkbox"
+                           class="appearance-none rounded-sm border-0 w-4 h-4  checked:border-0 focus:outline-none cursor-pointer hover:outline-none">
+                    <p class="text-white text-xs"><?= $escaper->escapeHtml(__('Я погоджуюся на обработку своїх персональних даных та отримання інформаційних повідомлень.')) ?></p>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    function submitForm() {
+        if (this.isChecked) {
+            console.log('Email:', this.email);
+        }
+    }
+</script>

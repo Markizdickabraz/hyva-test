@@ -1,0 +1,11 @@
+.btn-see-more {
+    @apply rounded-borderRadBtn border border-customRed flex items-center justify-center w-[90%] pt-2 pb-3 text-base md:text-base md:w-[304px] md:my-0 md:mx-auto md:h-14 md:items-center mt-[-18px] ;
+}
+
+.btn-more-detail {
+    @apply text-white bg-btnRed text-base py-2 min-w-btnMin p-padBtn rounded-borderRadBtn;
+}
+
+.btn-buy {
+    @apply text-white bg-btnRed text-base py-2 min-w-btnMin p-padBtn rounded-borderRadBtn
+}

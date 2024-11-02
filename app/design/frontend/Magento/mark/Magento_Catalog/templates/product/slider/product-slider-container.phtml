@@ -38,8 +38,16 @@ $viewMode = 'grid';
 $imageDisplayArea = 'category_page_grid';
 $showDescription = false;
 
-$name = (string) $block->getName();
-$title = (string) $block->getTitle();
+$name = (string)$block->getName();
+$title = (string)$block->getTitle();
+$words = explode(' ', $title);
+if (count($words) >= 2) {
+    $firstWord = $words[0];
+    $secondWord = $words[1];
+} else {
+    $firstWord = $title;
+    $secondWord = ' ';
+}
 $headingTag = $block->getData('heading_tag') ?: 'h3';
 $items = $block->getItems() ?? [];
 if (is_object($items) && $items instanceof Iterator) {
@@ -54,8 +62,8 @@ $sliderItemRenderer = $block->getLayout()->getBlock('product_list_item')
     ?: $block->getChildBlock('slider.item.template')
         ?: $block->getLayout()->createBlock(Template::class);
 
-$hideRatingSummary = (bool) $block->getData('hide_rating_summary');
-$hideDetails       = (bool) $block->getData('hide_details');
+$hideRatingSummary = (bool)$block->getData('hide_rating_summary');
+$hideDetails = (bool)$block->getData('hide_details');
 
 $sliderItemRenderer->setData('hide_details', $hideDetails);
 $sliderItemRenderer->setData('hide_rating_summary', $hideRatingSummary);
@@ -64,7 +72,7 @@ $sliderItemRenderer->setData('hide_rating_summary', $hideRatingSummary);
 // If a specific item template is set for this slider, the previously set template must be reset later
 // so the item template is only replaced for the one slider it is specified on.
 $sharedItemRendererTemplate = null;
-$isSharedItemRenderer       = $sliderItemRenderer !== $block->getChildBlock('slider.item.template');
+$isSharedItemRenderer = $sliderItemRenderer !== $block->getChildBlock('slider.item.template');
 if ($isSharedItemRenderer && $block->getChildBlock('slider.item.template')) {
     $sharedItemRendererTemplate = $sliderItemRenderer->getTemplate();
     $sliderSpecificItemTemplate = $block->getChildBlock('slider.item.template')->getTemplate();
@@ -77,7 +85,7 @@ $maxVisibleSlides = $block->getData('max_visible') ?? 4;
 // Breakpoints for 1 visible slider items on mobile, 2 visible on md, 3 on lg and 4 on xl (see $sliderPageSize).
 $defaultSliderItemClasses = 'mr-2 py-1 md:w-1/2 lg:w-1/3 xl:w-1/4';
 
-$sliderSectionClasses = $block->getData('maybe_purged_tailwind_section_classes') ?? 'my-12 text-gray-700 body-font';
+$sliderSectionClasses = $block->getData('maybe_purged_tailwind_section_classes') ?? 'mt-4 text-gray-700 body-font';
 $slideItemClasses = $block->getData('maybe_purged_tailwind_slide_item_classes') ?? $defaultSliderItemClasses;
 ?>
 <script>
@@ -169,46 +177,51 @@ $slideItemClasses = $block->getData('maybe_purged_tailwind_slide_item_classes') 
 
 
 <section
-    class="<?= $escaper->escapeHtmlAttr($sliderSectionClasses) ?>"
-    x-data="initSliderComponent()"
-    x-init="calcPageSize();"
-    x-id="['slider-nav', 'slider-desc', 'slider-id']"
-    @resize.window.debounce="calcPageSize(); $nextTick( function() { calcActive() })"
-    role="group"
-    aria-roledescription="<?= $escaper->escapeHtmlAttr(__('Carousel')) ?>"
-    aria-label="<?= $escaper->escapeHtmlAttr(__('Carousel %1', $title)) ?>"
-    :aria-describedby="$id('slider-desc')"
-    x-defer="intersect"
+        class="<?= $escaper->escapeHtmlAttr($sliderSectionClasses) ?> mr-[-1.5rem] xl:mr-0 mb-8"
+        x-data="initSliderComponent()"
+        x-init="calcPageSize();"
+        x-id="['slider-nav', 'slider-desc', 'slider-id']"
+        @resize.window.debounce="calcPageSize(); $nextTick( function() { calcActive() })"
+        role="group"
+        aria-roledescription="<?= $escaper->escapeHtmlAttr(__('Carousel')) ?>"
+        aria-label="<?= $escaper->escapeHtmlAttr(__('Carousel %1', $title)) ?>"
+        :aria-describedby="$id('slider-desc')"
+        x-defer="intersect"
 >
     <?php if ($items): ?>
         <div class="relative">
         <?php if ($title): ?>
-            <div class="container flex flex-col items-center pt-6 pb-3 mx-auto mb-6 border-b-2
-                    border-gray-300 md:flex-row">
-            <<?= /* @noEscape */ $headingTag ?> class="text-2xl font-medium text-gray-900 title-font">
-            <?= $escaper->escapeHtml($title); ?>
-            </<?= /* @noEscape */ $headingTag ?>>
+            <div class="container flex flex-col items-center gap-2px pt-6 pb-3 mx-auto mb-0 md:flex-row pr-12 xl:pr-0 justify-center md:flex-row ">
+            <<?= /* @noEscape */
+        $headingTag ?> class="text-2xl font-medium title-font text-customRed uppercase md:text-3xl">
+            <?= $escaper->escapeHtml($firstWord); ?>
+            <<?= /* @noEscape */
+        $headingTag ?> class="text-2xl font-medium text-gray-900 title-font uppercase md:text-3xl">
+            <?= $escaper->escapeHtml($secondWord); ?>
+            </<?= /* @noEscape */
+        $headingTag ?>>
             </div>
+
         <?php endif; ?>
         <span
-            class="sr-only"
-            :id="$id('slider-desc')"
-            tabindex="-1"
+                class="sr-only"
+                :id="$id('slider-desc')"
+                tabindex="-1"
         >
                 <?= $escaper->escapeHtml(__('Navigating through the elements of the carousel is possible using the tab key. You can skip the carousel or go straight to carousel navigation using the skip links.')) ?>
             </span>
 
         <a
-            href="#<?= $escaper->escapeHtmlAttr($name) ?>-slider-end"
-            class="action skip sr-only focus:not-sr-only focus:absolute focus:z-30 focus:bg-white"
+                href="#<?= $escaper->escapeHtmlAttr($name) ?>-slider-end"
+                class="action skip sr-only focus:not-sr-only focus:absolute focus:z-30 focus:bg-white"
         >
             <?= $escaper->escapeHtml(__('Press to skip carousel')) ?>
         </a>
         <button
-            x-show="itemCount > pageSize"
-            type="button"
-            class="action skip sr-only focus:not-sr-only focus:absolute focus:z-30 focus:bg-white"
-            @click.prevent="skipCarouselToNavigation($id('slider-nav'))"
+                x-show="itemCount > pageSize"
+                type="button"
+                class="action skip sr-only focus:not-sr-only focus:absolute focus:z-30 focus:bg-white"
+                @click.prevent="skipCarouselToNavigation($id('slider-nav'))"
         >
             <?= $escaper->escapeHtml(__('Press to go to carousel navigation')) ?>
         </button>
@@ -219,11 +232,12 @@ $slideItemClasses = $block->getData('maybe_purged_tailwind_slide_item_classes') 
                 <?php foreach ($items as $product): ?>
                     <div class="js_slide flex shrink-0 w-10/12 md:w-2/5 <?= $escaper->escapeHtmlAttr($slideItemClasses) ?>"
                          role="group"
-                         :aria-hidden="<?= (int) $sliderIndex ?> > active && <?= (int) $sliderIndex ?> <= (active + pageSize) ? 'false' : 'true'"
+                         :aria-hidden="<?= (int)$sliderIndex ?> > active && <?= (int)$sliderIndex ?> <= (active + pageSize) ? 'false' : 'true'"
                          aria-label="<?= $escaper->escapeHtmlAttr(__('Item %1', $sliderIndex++)) ?>"
                          :aria-describedby="`slide-desc-<?= $escaper->escapeHtmlAttr($product->getId()) ?>-${$id('slider-id')}`"
                     >
-                        <?= /** @noEscape */ $productListItemViewModel->getItemHtmlWithRenderer(
+                        <?= /** @noEscape */
+                        $productListItemViewModel->getItemHtmlWithRenderer(
                             $sliderItemRenderer,
                             $product,
                             $block,
@@ -236,32 +250,32 @@ $slideItemClasses = $block->getData('maybe_purged_tailwind_slide_item_classes') 
                 <?php endforeach; ?>
                 <?php for ($i = 0; $i < $maxVisibleSlides; $i++): /* Add empty filler slides in case the number of items is not dividable by the pagesize */ ?>
                     <div :class="{
-                        'js_dummy_slide w-full flex-none <?= $escaper->escapeJs($slideItemClasses) ?>' : pageFillers > <?= (int) $i ?>
+                        'js_dummy_slide w-full flex-none <?= $escaper->escapeJs($slideItemClasses) ?>' : pageFillers > <?= (int)$i ?>
                         }"></div>
                 <?php endfor; ?>
             </div>
         </div>
-        <div class="absolute bottom-10 left-0 w-full h-1 bg-gray-300 block lg:hidden">
+        <div class="absolute bottom-10 left-0 w-11/12 h-1 bg-gray-300 block lg:hidden">
             <div class="h-full w-0 bg-btnRed transition-all delay-300 ease-in-out progress-bar"></div>
         </div>
-        <div style="min-height: 76px">
+        <div style="min-height: 65px">
             <template x-if="itemCount > pageSize">
                 <div
-                    class="lg:flex hidden"
-                    :id="$id('slider-nav')"
+                        class="lg:flex hidden"
+                        :id="$id('slider-nav')"
                 >
                     <button
-                        type="button"
-                        aria-label="<?= $escaper->escapeHtmlAttr(__('Previous slide')) ?>"
-                        class="text-black flex-none p-3 absolute top-2/4 left-btnNav rounded-full bg-white  drop-shadow-2xl"
-                        @click="scrollPrevious"
+                            type="button"
+                            aria-label="<?= $escaper->escapeHtmlAttr(__('Previous slide')) ?>"
+                            class="text-black flex-none p-3 absolute top-2/4 left-btnNav rounded-full bg-white  drop-shadow-2xl"
+                            @click="scrollPrevious"
                     >
                         <?= $heroicons->chevronLeftHtml("w-5 h-5", 25, 25, ['aria-hidden' => 'true']) ?>
                     </button>
                     <button
-                        aria-label="<?= $escaper->escapeHtmlAttr(__('Next slide')) ?>"
-                        class="text-black flex-none p-3 absolute top-2/4 right-btnNav rounded-full bg-white drop-shadow-2xl"
-                        @click="scrollNext"
+                            aria-label="<?= $escaper->escapeHtmlAttr(__('Next slide')) ?>"
+                            class="text-black flex-none p-3 absolute top-2/4 right-btnNav rounded-full bg-white drop-shadow-2xl"
+                            @click="scrollNext"
                     >
                         <?= $heroicons->chevronRightHtml("w-5 h-5", 25, 25, ['aria-hidden' => 'true']) ?>
                     </button>
@@ -269,8 +283,9 @@ $slideItemClasses = $block->getData('maybe_purged_tailwind_slide_item_classes') 
             </template>
         </div>
         <span id="<?= $escaper->escapeHtmlAttr($name) ?>-slider-end" tabindex="-1"></span>
-<!--        <button class="mt-6 rounded-borderRadBtn border border-customRed flex align-center justify-center w-full pt-2 pb-3 text-xs " type="button">Дивитись всі</button>-->
         </div>
+        <button class="btn-see-more" type="button">Дивитись всі</button>
+
     <?php endif; ?>
 </section>
 <?php

@@ -1,0 +1,3 @@
+.hero__img {
+    @apply bg-hero h-mobHero bg-no-repeat bg-center flex-shrink-0 w-full xs:bg-cover md:bg-heroTab md:h-272 2xl:bg-heroDeskXXL  xl:h-[350px] xl:mr-[10px] xl:ml-[10px]
+}

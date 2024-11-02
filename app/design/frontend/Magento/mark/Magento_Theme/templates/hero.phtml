@@ -1,0 +1,63 @@
+<div x-data="{ currentSlide: 0 }"
+     class="relative overflow-hidden m-hero lg:mx-0 lg:rounded-se-3xl lg:rounded-es-3xl	xl:mt-10">
+    <div class="flex transition-all duration-500"
+         :style="{ transform: `translateX(-${currentSlide * 100}%)` }">
+
+        <div class="hero__img">
+            <div class="pl-11 pt-14 md:pl-6 md:pt-13 lg:w-480">
+                <h1 class="font-light text-3xl uppercase text-white"><?= $escaper->escapeHtml(__('Optigrill Elite')) ?></h1>
+                <h2 class="text-lg uppercase text-white md:pt-2"><?= $escaper->escapeHtml(__('Інноваційний гриль')) ?></h2>
+                <p class="text-sm text-white pt-3 pr-20 md:mr-96 lg:mr-28">
+                    <?= $escaper->escapeHtml(__('Щоразу ідеальний результат просмаження стейку від rare до well-done')) ?>
+                </p>
+            </div>
+            <button class="btn-more-detail ml-11 mt-200 md:mt-6 md:ml-6"
+                    type="button"><?= $escaper->escapeHtml(__('Детальніше')) ?></button>
+        </div>
+        <div class="hero__img">
+            <div class="pl-11 pt-14 md:pl-6 md:pt-13 lg:w-480">
+                <h1 class="font-light text-3xl uppercase text-white"><?= $escaper->escapeHtml(__('Optigrill Elite')) ?></h1>
+                <h2 class="text-lg uppercase text-white md:pt-2"><?= $escaper->escapeHtml(__('Інноваційний гриль')) ?></h2>
+                <p class="text-sm text-white pt-3 pr-20 md:mr-96 lg:mr-28">
+                    <?= $escaper->escapeHtml(__('Щоразу ідеальний результат просмаження стейку від rare до well-done')) ?>
+                </p>
+            </div>
+            <button class="btn-more-detail ml-11 mt-200 md:mt-6 md:ml-6"
+                    type="button"><?= $escaper->escapeHtml(__('Детальніше')) ?></button>
+        </div>
+        <div class="hero__img">
+            <div class="pl-11 pt-14 md:pl-6 md:pt-13 lg:w-480">
+                <h1 class="font-light text-3xl uppercase text-white"><?= $escaper->escapeHtml(__('Optigrill Elite')) ?></h1>
+                <h2 class="text-lg uppercase text-white md:pt-2"><?= $escaper->escapeHtml(__('Інноваційний гриль')) ?></h2>
+                <p class="text-sm text-white pt-3 pr-20 md:mr-96 lg:mr-28">
+                    <?= $escaper->escapeHtml(__('Щоразу ідеальний результат просмаження стейку від rare до well-done')) ?>
+                </p>
+            </div>
+            <button class="btn-more-detail ml-11 mt-200 md:mt-6 md:ml-6"
+                    type="button"><?= $escaper->escapeHtml(__('Детальніше')) ?></button>
+        </div>
+        <div class="hero__img">
+            <div class="pl-11 pt-14 md:pl-6 md:pt-13 lg:w-480">
+                <h1 class="font-light text-3xl uppercase text-white"><?= $escaper->escapeHtml(__('Optigrill Elite')) ?></h1>
+                <h2 class="text-lg uppercase text-white md:pt-2"><?= $escaper->escapeHtml(__('Інноваційний гриль')) ?></h2>
+                <p class="text-sm text-white pt-3 pr-20 md:mr-96 lg:mr-28">
+                    <?= $escaper->escapeHtml(__('Щоразу ідеальний результат просмаження стейку від rare до well-done')) ?>
+                </p>
+            </div>
+            <button class="btn-more-detail ml-11 mt-200 md:mt-6 md:ml-6"
+                    type="button"><?= $escaper->escapeHtml(__('Детальніше')) ?></button>
+        </div>
+
+    </div>
+
+    <!-- Slide controls -->
+    <div class="absolute inset-x-0 bottom-0 flex justify-center p-4">
+        <template x-for="(slide, index) in [0, 1, 2, 3]" :key="index">
+            <button
+                    @click="currentSlide = index"
+                    :class="{ 'bg-transparent border-2 border-customRed': currentSlide === index, 'bg-btnRed': currentSlide !== index }"
+                    class="w-3 h-3 mx-1 rounded-full">
+            </button>
+        </template>
+    </div>
+</div>

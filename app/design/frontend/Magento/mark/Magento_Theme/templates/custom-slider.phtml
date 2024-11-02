@@ -1,0 +1,90 @@
+<?php
+
+use Hyva\Theme\ViewModel\HeroiconsOutline;
+
+
+/** @var HeroiconsOutline $heroicons */
+$heroicons = $viewModels->require(HeroiconsOutline::class);
+
+?>
+<div class="relative" x-data="{ currentSlide: 0 }">
+    <div  class="relative overflow-x-hidden m-hero h-[365px] lg:mx-0">
+        <div class="flex transition-all duration-500"
+             :style="{ transform: `translateX(-${currentSlide * 100}%)` }">
+
+            <div class="bg-slider h-80 bg-no-repeat relative border-b-4 border-customRed md:border-0 flex-shrink-0 w-full md:bg-sliderTab xl:bg-sliderDesc bg-cover xl:before:absolute xl:before:bottom-0 xl:before:h-7 xl:before:w-beforeDesc xl:before:z-40 xl:border-0 xl:before:bg-btnRed xl:before:right-0 overflow-hidden box-shadow-cardShadow">
+                <div class="absolute bg-white w-[280px] md:w-[384px] md:h-[202px] bottom-0 p-4 md:pt-12 md:pl-6 md:pr-2 md:pb-5 xl:w-[418px] xl:h-[257px] xl:pt-16 xl:pl-12 xl:pr-4 xl:pb-11">
+                    <h2 class="uppercase text-customRed text-base md:text-xl "><?= $escaper->escapeHtml(__('наслаждайтесь любимыми блюдами вместе с Tefal!')) ?></h2>
+                    <p class="text-sm pt-2 pb-4"><?= $escaper->escapeHtml(__('Новая эра в минеральном покрытии')) ?></p>
+                    <button class="btn-more-detail"
+                            type="button">
+                        <?= $escaper->escapeHtml(__('Детальніше')) ?>
+                    </button>
+                </div>
+            </div>
+
+            <div class="bg-slider h-80 bg-no-repeat relative border-b-4 border-customRed md:border-0 flex-shrink-0 w-full md:bg-sliderTab xl:bg-sliderDesc bg-cover xl:before:absolute xl:before:bottom-0 xl:before:h-7 xl:before:w-beforeDesc xl:before:z-40 xl:border-0 xl:before:bg-btnRed xl:before:right-0 overflow-hidden box-shadow-cardShadow">
+                <div class="absolute bg-white w-[280px] md:w-[384px] md:h-[202px] bottom-0 p-4 md:pt-12 md:pl-6 md:pr-2 md:pb-5 xl:w-[418px] xl:h-[257px] xl:pt-16 xl:pl-12 xl:pr-4 xl:pb-11">
+                    <h2 class="uppercase text-customRed text-base md:text-xl "><?= $escaper->escapeHtml(__('наслаждайтесь любимыми блюдами вместе с Tefal!')) ?></h2>
+                    <p class="text-sm pt-2 pb-4"><?= $escaper->escapeHtml(__('Новая эра в минеральном покрытии')) ?></p>
+                    <button class="btn-more-detail"
+                            type="button">
+                        <?= $escaper->escapeHtml(__('Детальніше')) ?>
+                    </button>
+                </div>
+            </div>
+
+            <div class="bg-slider h-80 bg-no-repeat relative border-b-4 border-customRed md:border-0 flex-shrink-0 w-full md:bg-sliderTab xl:bg-sliderDesc bg-cover xl:before:absolute xl:before:bottom-0 xl:before:h-7 xl:before:w-beforeDesc xl:before:z-40 xl:border-0 xl:before:bg-btnRed xl:before:right-0 overflow-hidden box-shadow-cardShadow">
+                <div class="absolute bg-white w-[280px] md:w-[384px] md:h-[202px] bottom-0 p-4 md:pt-12 md:pl-6 md:pr-2 md:pb-5 xl:w-[418px] xl:h-[257px] xl:pt-16 xl:pl-12 xl:pr-4 xl:pb-11">
+                    <h2 class="uppercase text-customRed text-base md:text-xl "><?= $escaper->escapeHtml(__('наслаждайтесь любимыми блюдами вместе с Tefal!')) ?></h2>
+                    <p class="text-sm pt-2 pb-4"><?= $escaper->escapeHtml(__('Новая эра в минеральном покрытии')) ?></p>
+                    <button class="btn-more-detail"
+                            type="button">
+                        <?= $escaper->escapeHtml(__('Детальніше')) ?>
+                    </button>
+                </div>
+            </div>
+
+            <div class="bg-slider h-80 bg-no-repeat relative border-b-4 border-customRed md:border-0 flex-shrink-0 w-full md:bg-sliderTab xl:bg-sliderDesc bg-cover xl:before:absolute xl:before:bottom-0 xl:before:h-7 xl:before:w-beforeDesc xl:before:z-40 xl:border-0 xl:before:bg-btnRed xl:before:right-0 overflow-hidden box-shadow-cardShadow">
+                <div class="absolute bg-white w-[280px] md:w-[384px] md:h-[202px] bottom-0 p-4 md:pt-12 md:pl-6 md:pr-2 md:pb-5 xl:w-[418px] xl:h-[257px] xl:pt-16 xl:pl-12 xl:pr-4 xl:pb-11">
+                    <h2 class="uppercase text-customRed text-base md:text-xl "><?= $escaper->escapeHtml(__('наслаждайтесь любимыми блюдами вместе с Tefal!')) ?></h2>
+                    <p class="text-sm pt-2 pb-4"><?= $escaper->escapeHtml(__('Новая эра в минеральном покрытии')) ?></p>
+                    <button class="btn-more-detail"
+                            type="button">
+                        <?= $escaper->escapeHtml(__('Детальніше')) ?>
+                    </button>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Slide controls -->
+        <div class="absolute inset-x-0 top-100 flex justify-center p-4 lg:hidden">
+            <template x-for="(slide, index) in [0, 1, 2, 3]" :key="index">
+                <button
+                        @click="currentSlide = index"
+                        :class="{ 'bg-transparent border-2 border-customRed': currentSlide === index, 'bg-btnRed': currentSlide !== index }"
+                        class="w-3 h-3 mx-1 rounded-full">
+                </button>
+            </template>
+        </div>
+
+    </div>
+
+
+    <div class="hidden lg:flex justify-between w-full absolute top-[40%] transform -translate-y-1/2">
+        <button
+                @click="currentSlide = (currentSlide === 0) ? 3 : currentSlide - 1"
+                class="text-black flex-none p-3 absolute top-2/4 left-btnNav rounded-full bg-white  drop-shadow-2xl">
+            <?= $heroicons->chevronLeftHtml("w-5 h-5", 25, 25, ['aria-hidden' => 'true']) ?>
+
+        </button>
+        <button
+                @click="currentSlide = (currentSlide === 3) ? 0 : currentSlide + 1"
+                class="text-black flex-none p-3 absolute top-2/4 right-btnNav rounded-full bg-white drop-shadow-2xl">
+            <?= $heroicons->chevronRightHtml("w-5 h-5", 25, 25, ['aria-hidden' => 'true']) ?>
+
+        </button>
+    </div>
+
+</div>

@@ -1,0 +1,42 @@
+<?php
+/**
+ * Hyvä Themes - https://hyva.io
+ * Copyright © Hyvä Themes 2020-present. All rights reserved.
+ * This product is licensed per Magento install
+ * See https://hyva.io/license
+ */
+
+declare(strict_types=1);
+
+use Magento\Framework\Escaper;
+use Magento\Framework\View\Element\Template;
+
+/** @var Escaper $escaper */
+/** @var Template $block */
+?>
+
+<div class=" hidden lg:block bg-catalogBtn py-2">
+    <div class="container lg:flex items-center justify-between">
+        <ul class="flex gap-8 text-footerForm text-sm ">
+            <li><a href="#"><?= $escaper->escapeHtml(__('Про магазин')) ?></a></li>
+            <li><a href="#"><?= $escaper->escapeHtml(__('Доставка та оплата')) ?></a></li>
+            <li><a href="#"><?= $escaper->escapeHtml(__('Повернення та обмін')) ?></a></li>
+            <li><a href="#"><?= $escaper->escapeHtml(__('Гарантії')) ?></a></li>
+            <li><a href="#"><?= $escaper->escapeHtml(__('Контакти')) ?></a></li>
+        </ul>
+        <div class="flex gap-5">
+            <div class="flex text-sm items-center">
+                <p class="border-r text-reviewColor border-reviewColor pr-2"><?= $escaper->escapeHtml(__('Ру')) ?></p>
+                <p class="text-footerForm pl-2"><?= $escaper->escapeHtml(__('Укр')) ?></p>
+            </div>
+            <div class="flex gap-1 items-center">
+                <img class="w-4 h-4" src="<?= $escaper->escapeUrl($block->getViewFileUrl('images/location.svg')) ?>" alt="location">
+                <p class="text-sm text-footerForm"><?= $escaper->escapeHtml(__('Київ')) ?></p>
+            </div>
+            <div class="flex gap-1">
+                <?= $block->getChildHtml('customer') ?>
+                <p class="text-sm text-footerForm"><?= $escaper->escapeHtml(__('Оcoбистий кабінет')) ?></p>
+            </div>
+        </div>
+    </div>
+</div>
